@@ -98,16 +98,16 @@ class ViewChatBot(object):
 			self.ask(kwargs["question"])
 			pass
 		if event == "onPrint":
-			self.ask(kwargs["msg"])
+			self.print_msg(kwargs["msg"])
 			pass
 		pass
 
 	def ask(self, question):
-		print question
+		print "[Question]:", question
 		pass
 
 	def print_msg(self, msg):
-		print msg
+		print "[Message]:", msg
 		pass
 	pass
 
