@@ -1,155 +1,40 @@
-import traceback
+PARAM_TKINTER = True
 
-class Trace(object):
-	@staticmethod
-	def log(type, msg):
-		print "[{type}] {msg}".format(
-			type = type,
-			msg = msg
-			)
-		pass
-	pass
+from ModelChatBot import ModelChatBot
 
-class Notification(object):
-	observers = {}
+if PARAM_TKINTER is True:
+    from TkinterViewChatBot import TkinterViewChatBot
+    from TkinterControllerChatBot import TkinterControllerChatBot
+    pass
+else:
+    from ConsoleControllerChatBot import ConsoleControllerChatBot
+    from ConsolerViewChatBot import ConsolerViewChatBot
+    pass
 
-	@staticmethod
-	def addObserver(observer, event):
-		if event is None:
-			Trace.log("Notification", "event is None")
-			return False
-			pass
+def main_console():
+    model = ModelChatBot()
+    controller = ConsoleControllerChatBot(model)
+    view = ConsolerViewChatBot(model)
 
-		if observer is None:
-			Trace.log("Notification", "observer is None")
-			return False
-			pass
+    model.run()
+    pass
 
-		if event not in Notification.observers.keys():
-			Notification.observers[event] = []
-			pass
+def main_tkinter():
+    model = ModelChatBot()
+    controller = TkinterControllerChatBot(model)
+    view = TkinterViewChatBot(model, controller)
 
-		Notification.observers[event].append(observer)
+    view.pack()
 
-		return True
-		pass
+    view.mainloop()
+    pass
 
-	@staticmethod
-	def notify(event, *args, **kwargs):
-		if event not in Notification.observers.keys():
-			Trace.log(
-				"Notification", 
-				"event {event} not in observers {observers}".format(
-					event = event,
-					observers = Notification.observers
-					)
-				)
-			return False
-			pass
-
-		for observer in Notification.observers[event]:
-			observer.update(event, *args, **kwargs)
-			pass
-
-		return True
-		pass
-	pass
-
-class ModelChatBot(object):
-	def __init__(self):
-		self.is_running = False
-		self.db = {}
-
-		Notification.addObserver(self, "onStop")
-		pass
-
-	def isRunning(self):
-		return is_running
-		pass
-
-	def run(self):
-		is_running = True
-
-		Notification.notify("onStart")
-		# Notification.notify("onStop")
-		pass
-
-	def update(self, event, *args, **kwargs):
-		if event == "onStop":
-			self.stop()
-			pass
-		pass
-
-	def stop(self):
-		self.is_running = False
-		pass
-	pass
-
-class ViewChatBot(object):
-	def __init__(self, model):
-		self.model = model
-
-		Notification.addObserver(self, "onAskQuestion")
-		Notification.addObserver(self, "onPrint")
-		pass
-
-	def update(self, event, *args, **kwargs):
-		if event == "onAskQuestion":
-			self.ask(kwargs["question"])
-			pass
-		if event == "onPrint":
-			self.print_msg(kwargs["msg"])
-			pass
-		pass
-
-	def ask(self, question):
-		print "[Question]:", question
-		pass
-
-	def print_msg(self, msg):
-		print "[Message]:", msg
-		pass
-	pass
-
-class ControllerChatBot(object):
-	def __init__(self, model):
-		self.model = model
-
-		Notification.addObserver(self, "onStart")
-		pass
-
-	def update(self, event, *args, **kwargs):
-		if event == "onStart":
-			self.ask_name()
-			pass
-		pass
-
-	def ask_name(self):
-		question = "What is your name?"
-		Notification.notify("onAskQuestion", question=question)
-
-		answer = self.get_input()
-
-		msg = "Hi {name}!".format(name=answer)
-		Notification.notify("onPrint", msg=msg)
-		pass
-
-	def get_input(self):
-		user_input = raw_input(">")
-
-		return user_input
-		pass
-	pass
-
-def main():
-	model = ModelChatBot()
-	controller = ControllerChatBot(model)
-	view = ViewChatBot(model)
-
-	model.run()
-
-	pass
 
 if __name__ == "__main__":
-	main()
-	pass
+    if PARAM_TKINTER is True:
+        main_tkinter()
+        pass
+    else:
+        main_console()
+        pass
+    pass
