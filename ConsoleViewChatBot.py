@@ -1,7 +1,7 @@
 from Utils import *
 
 
-class ConsolerViewChatBot(object):
+class ConsoleViewChatBot(object):
     def __init__(self, model):
         self.model = model
 

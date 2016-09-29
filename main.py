@@ -8,13 +8,13 @@ if PARAM_TKINTER is True:
     pass
 else:
     from ConsoleControllerChatBot import ConsoleControllerChatBot
-    from ConsolerViewChatBot import ConsolerViewChatBot
+    from ConsoleViewChatBot import ConsoleViewChatBot
     pass
 
 def main_console():
     model = ModelChatBot()
     controller = ConsoleControllerChatBot(model)
-    view = ConsolerViewChatBot(model)
+    view = ConsoleViewChatBot(model)
 
     model.run()
     pass
