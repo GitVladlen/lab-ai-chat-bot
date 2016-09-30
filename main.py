@@ -1,8 +1,8 @@
 PARAM_TKINTER = True
-
 from ModelChatBot import ModelChatBot
 
 if PARAM_TKINTER is True:
+    from Tkinter import *
     from TkinterViewChatBot import TkinterViewChatBot
     from TkinterControllerChatBot import TkinterControllerChatBot
     pass
@@ -22,11 +22,13 @@ def main_console():
 def main_tkinter():
     model = ModelChatBot()
     controller = TkinterControllerChatBot(model)
-    view = TkinterViewChatBot(model, controller)
 
-    view.pack()
+    root = Tk()
 
-    view.mainloop()
+    view = TkinterViewChatBot(model, controller, root)
+
+    view.pack(fill=BOTH, expand=True)
+    root.mainloop()
     pass
 
 
