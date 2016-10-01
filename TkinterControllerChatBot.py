@@ -10,6 +10,8 @@ class TkinterControllerChatBot(object):
     def submit(self, msg):
         self.model.addToHistory(self.model.user_name, msg)
 
+        self.view.syncWithModel()
+
         question_block = self.model.currentQuestion()
 
         if question_block is None:

@@ -107,6 +107,8 @@ class TkinterViewChatBot(Frame):
             pass
 
         self.text.config(state=DISABLED)
+        
+        self.text.see(END)
         pass
 
     pass
