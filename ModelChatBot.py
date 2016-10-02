@@ -1,63 +1,78 @@
 from Utils import *
+import json
 
 
 class ModelChatBot(object):
-    def __init__(self):
-        self.db = [
-            dict(
-                Question="What is your name?",
-                Suggestion=("Vladlen", "Bogdan", "Max"),
-                SuggestionTrue="I know this name :)",
-                SuggestionFalse="I dont know this name o_0",
-                PostQuestion="Hi!"
-            ),
-            dict(
-                Question="How are you?",
-                Suggestion=("Fine", "Normal"),
-                SuggestionTrue="That great :)",
-                SuggestionFalse="Oh o_0",
-            ),
-            dict(
-                Question="What is your favourite color?",
-                PostQuestion="Oh, I really dont care)"
-            ),
-            dict(
-                Question="Good bye!",
-            ),
-        ]
+    def __init__(self, dialogs_file_name):
+        self.dialogs = []
 
         self.history = []
 
         self.user_name = "User"
         self.bot_name = "Bob"
 
-        self.current_question = 0
+        self.current_dialog = 0
+
+        self.loadDialogs(dialogs_file_name)
+        pass
+
+    def loadDialogs(self, file_name):
+        try:
+            with open(file_name) as json_data:
+                data = json.load(json_data)
+                self.dialogs = data["dialogs"]
+                pass
+        except Exception as exception:
+            Trace.log("Model", "loadDialogs {}: {}".format(type(exception), exception))
+            return False
+            pass
+
+        return True
         pass
 
     def reset(self):
         self.history = []
-        self.current_question = 0
+        self.current_dialog = 0
         pass
 
-    def doSuggestion(self, question_dict, msg):
-        suggestion = question_dict.get("Suggestion")
+    def doQuestion(self):
+        dialog = self.currentDialog()
+        if dialog is None:
+            return None
+            pass
 
+        question = dialog.get("question")
+
+        return question
+        pass
+
+    def doSuggestion(self, msg):
+        dialog = self.currentDialog()
+        if dialog is None:
+            return None
+            pass
+
+        suggestion = dialog.get("suggestion")
         if suggestion is None:
             return None
             pass
 
-        suggestion_true = question_dict.get("SuggestionTrue")
-
+        suggestion_true = dialog.get("suggestion_true")
         if msg in suggestion:
             return suggestion_true
             pass
 
-        suggestion_false = question_dict.get("SuggestionFalse")
+        suggestion_false = dialog.get("suggestion_false")
         return suggestion_false
         pass
 
-    def doPostQuestion(self, question_dict):
-        post_question = question_dict.get("PostQuestion")
+    def doPostQuestion(self):
+        dialog = self.currentDialog()
+        if dialog is None:
+            return None
+            pass
+
+        post_question = dialog.get("post_question")
 
         return post_question
         pass
@@ -72,19 +87,19 @@ class ModelChatBot(object):
         pass
 
     def hasQuestion(self):
-        if self.current_question < len(self.db):
+        if self.current_dialog < len(self.dialogs):
             return True
             pass
 
         return False
         pass
 
-    def currentQuestion(self):
+    def currentDialog(self):
         if self.hasQuestion() is False:
             return None
             pass
 
-        question = self.db[self.current_question]
+        question = self.dialogs[self.current_dialog]
 
         return question
         pass
@@ -94,8 +109,7 @@ class ModelChatBot(object):
             return None
             pass
 
-        
-        self.current_question += 1
+        self.current_dialog += 1
         pass
 
     pass

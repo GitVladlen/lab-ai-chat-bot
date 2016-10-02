@@ -83,3 +83,11 @@ pip-log.txt
 #############
 
 .idea/
+
+#############
+## Build
+#############
+ChatBotBob/
+build/
+dist/
+ChatBotBob.zip
