@@ -2,28 +2,30 @@ from Utils import *
 
 
 class ConsoleViewChatBot(object):
-    def __init__(self, model):
+    def __init__(self, model, controller):
         self.model = model
+        self.controller = controller
 
-        Notification.addObserver(self, "onAskQuestion")
-        Notification.addObserver(self, "onPrint")
+        self.controller.setView(self)
         pass
 
-    def update(self, event, *args, **kwargs):
-        if event == "onAskQuestion":
-            self.ask(kwargs["question"])
+    def syncWithModel(self):
+        print "============================"
+        for user, msg in self.model.getHistory():
+            line = "{}: {}".format(user, msg)
+            print line
             pass
-        if event == "onPrint":
-            self.print_msg(kwargs["msg"])
+
+        input = ""
+        while len(input) == 0:
+            try:
+                input = raw_input(">")
+            except Exception as exception:
+                Trace.log("View", "syncWithModel {}: {}".format(type(exception), exception))
+                pass
             pass
-        pass
 
-    def ask(self, question):
-        print "[Question]:", question
-        pass
-
-    def print_msg(self, msg):
-        print "[Message]:", msg
+        self.controller.submit(input)
         pass
 
     pass

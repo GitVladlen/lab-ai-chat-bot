@@ -1,33 +1,53 @@
-from Utils import *
-
-
 class ConsoleControllerChatBot(object):
     def __init__(self, model):
         self.model = model
-
-        Notification.addObserver(self, "onStart")
+        self.view = None
         pass
 
-    def update(self, event, *args, **kwargs):
-        if event == "onStart":
-            self.ask_name()
+    def setView(self, view):
+        self.view = view
+        pass
+
+    def submit(self, msg):
+        if msg == "exit":
+            return
             pass
+
+        self.model.addToHistory(self.model.user_name, msg)
+
+        suggestion = self.model.doSuggestion(msg)
+        if suggestion is not None:
+            self.model.addToHistory(self.model.bot_name, suggestion)
+            pass
+
+        post_question = self.model.doPostQuestion()
+        if post_question is not None:
+            self.model.addToHistory(self.model.bot_name, post_question)
+            pass
+
+        self.model.nextQuestion()
+
+        question = self.model.doQuestion()
+        if question is None:
+            return
+            pass
+
+        self.model.addToHistory(self.model.bot_name, question)
+
+        self.view.syncWithModel()
         pass
 
-    def ask_name(self):
-        question = "What is your name?"
-        Notification.notify("onAskQuestion", question=question)
+    def startChatting(self):
+        self.model.reset()
 
-        answer = self.get_input()
+        question = self.model.doQuestion()
+        if question is None:
+            return
+            pass
 
-        msg = "Hi {name}!".format(name=answer)
-        Notification.notify("onPrint", msg=msg)
-        pass
+        self.model.addToHistory(self.model.bot_name, question)
 
-    def get_input(self):
-        user_input = raw_input(">")
-
-        return user_input
+        self.view.syncWithModel()
         pass
 
     pass

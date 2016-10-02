@@ -28,7 +28,10 @@ else:
     def main():
         model = ModelChatBot("dialogs.json")
         controller = ConsoleControllerChatBot(model)
-        view = ConsoleViewChatBot(model)
+
+        view = ConsoleViewChatBot(model, controller)
+
+        controller.startChatting()
         pass
     pass
 
