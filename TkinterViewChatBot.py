@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from Tkinter import *
 from ttk import *
 
@@ -23,7 +26,7 @@ class TkinterViewChatBot(Frame):
         pass
 
     def setupRoot(self, root):
-        root.title("ChatBot Bob")
+        root.title("Симулятор переписки")
 
         def onReturn(event):
             self.onSumbit()
@@ -46,7 +49,7 @@ class TkinterViewChatBot(Frame):
     def setupOjects(self):
         self.entry_str_var = StringVar()
 
-        btn_start = Button(self, text="Start")
+        btn_start = Button(self, text=u"Найти собеседника")
 
         def onBtnStartClick(event):
             self.controller.startChatting()
@@ -55,16 +58,16 @@ class TkinterViewChatBot(Frame):
         btn_start.bind("<Button-1>", onBtnStartClick)
         btn_start.pack(side=TOP, fill=BOTH, padx=5, pady=5)
 
-        group_chat = LabelFrame(self, text="Chat log:")
+        group_chat = LabelFrame(self, text=u"Переписка:")
         group_chat.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
 
         scrollbar = Scrollbar(group_chat)
         self.text = Text(group_chat, width=40, height=15, wrap=WORD, yscrollcommand=scrollbar.set)
 
-        group_msg = LabelFrame(self, text="Enter message:")
+        group_msg = LabelFrame(self, text=u"Новое сообщение:")
         group_msg.pack(side=TOP, fill=X, expand=True, padx=5, pady=5)
 
-        btn = Button(group_msg, text="Submit")
+        btn = Button(group_msg, text=u"Отправить")
 
         self.ent = Entry(group_msg, textvariable=self.entry_str_var, state=DISABLED)
         self.ent.pack(side=TOP, fill=X, padx=5, pady=5)
@@ -88,7 +91,7 @@ class TkinterViewChatBot(Frame):
         self.text.delete('1.0', END)
 
         for user, msg in self.model.getHistory():
-            line = "{}: {}\n".format(user, msg)
+            line = u"{}: {}\n".format(user, msg)
             self.text.insert(END, line)
             pass
 

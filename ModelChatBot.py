@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from Utils import *
 import json
 
@@ -8,8 +11,8 @@ class ModelChatBot(object):
 
         self.history = []
 
-        self.user_name = "User"
-        self.bot_name = "Bob"
+        self.user_name = u"Вы"
+        self.bot_name = u"Собеседник"
 
         self.current_dialog = 0
 
@@ -19,7 +22,7 @@ class ModelChatBot(object):
     def loadDialogs(self, file_name):
         try:
             with open(file_name) as json_data:
-                data = json.load(json_data)
+                data = json.load(json_data, encoding="utf-8")
                 self.dialogs = data["dialogs"]
                 pass
         except Exception as exception:

@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 class TkinterControllerChatBot(object):
     def __init__(self, model):
         self.model = model

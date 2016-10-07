@@ -1,20 +1,20 @@
 {
 	"dialogs": [{
-		"question": "What is your name?",
-		"suggestion": ["Bob", "Vladlen", "Bogdan", "Max"],
-		"suggestion_true": "I know this name :)",
-		"suggestion_false": "I dont know this name o_0",
-		"post_question": "Hi!"
+		"question": "Как тебя зовут?",
+		"suggestion": ["Bob", "Владлен"],
+		"suggestion_true": "Я знаю это имя :)",
+		"suggestion_false": "Не слышал еще такого имени o_0",
+		"post_question": "Привет!"
 	}, {
-		"question": "How are you?",
-		"suggestion": ["Fine", "Normal"],
-		"suggestion_true": "That great :)",
-		"suggestion_false": "Oh o_0"
+		"question": "Как дела?",
+		"suggestion": ["Хорошо", "Нормально"],
+		"suggestion_true": "Это хорошо :)",
+		"suggestion_false": "Оу o_0"
 	}, {
-		"question": "What is your favourite color?",
-		"post_question": "Oh, I really dont care)"
+		"question": "А какой твой любимый цвет?",
+		"post_question": "Если честно мне все равно :)"
 	}, {
-		"question": "Good bye!",
+		"question": "Пока!",
 		"post_question": "..."
 	}]
 }
