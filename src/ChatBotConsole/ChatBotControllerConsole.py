@@ -1,21 +1,40 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class ConsoleControllerChatBot(object):
-    def __init__(self, model):
-        self.model = model
-        self.view = None
-        pass
+from src.Common.Utils import *
 
-    def setView(self, view):
+
+class ChatBotControllerConsole(object):
+    def __init__(self, model, view):
+        self.model = model
         self.view = view
         pass
 
-    def submit(self, msg):
-        if msg == "exit":
+    def run(self):
+        self.view.show()
+        self._startChatting()
+        pass
+
+    def _startChatting(self):
+        self.model.reset()
+
+        question = self.model.doQuestion()
+        if question is None:
             return
             pass
 
+        self.model.addToHistory(self.model.bot_name, question)
+
+        user_input = self.view.inputUserMessage()
+
+        while user_input != "exit":
+            self._submit(user_input)
+
+            user_input = self.view.inputUserMessage()
+            pass
+        pass
+
+    def _submit(self, msg):
         self.model.addToHistory(self.model.user_name, msg)
 
         suggestion = self.model.doSuggestion(msg)
@@ -36,21 +55,5 @@ class ConsoleControllerChatBot(object):
             pass
 
         self.model.addToHistory(self.model.bot_name, question)
-
-        self.view.syncWithModel()
         pass
-
-    def startChatting(self):
-        self.model.reset()
-
-        question = self.model.doQuestion()
-        if question is None:
-            return
-            pass
-
-        self.model.addToHistory(self.model.bot_name, question)
-
-        self.view.syncWithModel()
-        pass
-
     pass

@@ -1,21 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from src.Common.Utils import *
 
-class TkinterControllerChatBot(object):
-    def __init__(self, model):
+
+class ChatBotControllerTkinter(object):
+    def __init__(self, model, view):
         self.model = model
-        self.view = None
+        self.view = view     
         pass
 
-    def setView(self, view):
-        self.view = view
+    def run(self):
+        Notification.addObserver(self._submit, Events.onViewSubmit)
+        Notification.addObserver(self._startChatting, Events.onViewStartChatting)
+
+        self.view.show()
         pass
 
-    def submit(self, msg):
+    def _submit(self, msg):
         self.model.addToHistory(self.model.user_name, msg)
-
-        self.view.syncWithModel()
 
         suggestion = self.model.doSuggestion(msg)
         if suggestion is not None:
@@ -29,19 +32,15 @@ class TkinterControllerChatBot(object):
 
         self.model.nextQuestion()
 
-        self.view.syncWithModel()
-
         question = self.model.doQuestion()
         if question is None:
             return
             pass
 
         self.model.addToHistory(self.model.bot_name, question)
-
-        self.view.syncWithModel()
         pass
 
-    def startChatting(self):
+    def _startChatting(self):
         self.model.reset()
 
         question = self.model.doQuestion()
@@ -50,8 +49,6 @@ class TkinterControllerChatBot(object):
             pass
 
         self.model.addToHistory(self.model.bot_name, question)
-
-        self.view.syncWithModel()
         pass
 
     pass

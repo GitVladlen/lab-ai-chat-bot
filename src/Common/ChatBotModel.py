@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from Utils import *
 import json
 
+from src.Common.Utils import *
 
-class ModelChatBot(object):
+
+class ChatBotModel(object):
     def __init__(self, dialogs_file_name):
         self.dialogs = []
 
@@ -21,8 +22,8 @@ class ModelChatBot(object):
 
     def loadDialogs(self, file_name):
         try:
-            with open(file_name) as json_data:
-                data = json.load(json_data, encoding="utf-8")
+            with open(file_name, encoding="utf-8") as json_data:
+                data = json.load(json_data)
                 self.dialogs = data["dialogs"]
                 pass
         except Exception as exception:
@@ -76,13 +77,13 @@ class ModelChatBot(object):
             pass
 
         post_question = dialog.get("post_question")
-
         return post_question
         pass
 
     def addToHistory(self, user, msg):
         block = (user, msg)
         self.history.append(block)
+        Notification.notify(Events.onModelHistoryChanged, user, msg)
         pass
 
     def getHistory(self):

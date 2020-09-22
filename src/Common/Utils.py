@@ -1,14 +1,19 @@
 class Trace(object):
     @staticmethod
     def log(type, msg):
-        print "[{type}] {msg}".format(
+        print("[{type}] {msg}".format(
             type=type,
             msg=msg
-        )
+        ))
         pass
 
     pass
 
+
+class Events(object):
+    @staticmethod
+    def addEvent(event):
+        setattr(Events, event, event)
 
 class Notification(object):
     observers = {}
@@ -48,7 +53,7 @@ class Notification(object):
             pass
 
         for observer in Notification.observers[event]:
-            observer.update(event, *args, **kwargs)
+            observer(*args, **kwargs)
             pass
 
         return True
