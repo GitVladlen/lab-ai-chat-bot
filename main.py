@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-PARAM_TKINTER = True
+PARAM_TKINTER = False
 
 if PARAM_TKINTER == True:
     from src.ChatBotTkinter.ChatBotAppTkinter import ChatBotAppTkinter as ChatBot

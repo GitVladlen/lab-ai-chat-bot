@@ -17,7 +17,7 @@ class ChatBotViewConsole(object):
         if user == self.model.user_name:
             return
 
-        line = "{}: {}".format(user, msg)
+        line = u"{}: {}".format(user, msg)
         print(line)
         pass
 
@@ -25,11 +25,14 @@ class ChatBotViewConsole(object):
         user_input = ""
         while len(user_input) == 0:
             try:
-                user_input = input("> ")
+                user_input = raw_input("> ")
             except Exception as exception:
                 Trace.log("View", "inputUserMessage {}: {}".format(type(exception), exception))
                 pass
             pass
+            
+        if type(user_input) != str:
+            return "exit"
 
         return user_input
     pass

@@ -22,8 +22,8 @@ class ChatBotModel(object):
 
     def loadDialogs(self, file_name):
         try:
-            with open(file_name, encoding="utf-8") as json_data:
-                data = json.load(json_data)
+            with open(file_name) as json_data:
+                data = json.load(json_data, encoding="utf-8")
                 self.dialogs = data["dialogs"]
                 pass
         except Exception as exception:
