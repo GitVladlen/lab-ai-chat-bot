@@ -7,6 +7,7 @@ from src.ChatBotConsole.ChatBotViewConsole import ChatBotViewConsole
 
 from src.Common.Utils import *
 
+
 class ChatBotAppConsole(object):
     def __init__(self):
         Events.addEvent("onModelHistoryChanged");
@@ -15,8 +16,9 @@ class ChatBotAppConsole(object):
         self.view = ChatBotViewConsole(self.model)
 
         self.controller = ChatBotControllerConsole(self.model, self.view)
+        pass
 
+    def run(self):
         self.controller.run()
-        
         pass
     pass

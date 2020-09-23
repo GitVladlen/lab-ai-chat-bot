@@ -116,4 +116,8 @@ class ChatBotModel(object):
         self.current_dialog += 1
         pass
 
+    def getMessageCount(self):
+        return len(self.history)
+        pass
+
     pass

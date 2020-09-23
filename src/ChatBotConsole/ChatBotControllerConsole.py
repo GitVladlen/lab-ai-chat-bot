@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from src.Common.Utils import *
-
 
 class ChatBotControllerConsole(object):
     def __init__(self, model, view):

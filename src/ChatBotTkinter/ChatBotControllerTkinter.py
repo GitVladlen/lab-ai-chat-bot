@@ -42,6 +42,7 @@ class ChatBotControllerTkinter(object):
 
     def _startChatting(self):
         self.model.reset()
+        self.view.clearDialog()
 
         question = self.model.doQuestion()
         if question is None:

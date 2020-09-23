@@ -17,15 +17,19 @@ class ChatBotViewConsole(object):
         if user == self.model.user_name:
             return
 
-        line = "{}: {}".format(user, msg)
+        message_counter = self.model.getMessageCount()
+
+        line = "[{}] {}: {}".format(message_counter, user, msg)
+
         print(line)
         pass
 
     def inputUserMessage(self):
+        message_counter = self.model.getMessageCount()
         user_input = ""
         while len(user_input) == 0:
             try:
-                user_input = input("> ")
+                user_input = input("[{}] > ".format(message_counter+1))
             except Exception as exception:
                 Trace.log("View", "inputUserMessage {}: {}".format(type(exception), exception))
                 pass

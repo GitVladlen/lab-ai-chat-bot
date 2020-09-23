@@ -6,9 +6,6 @@ from tkinter.ttk import *
 
 from src.Common.Utils import *
 
-# view interface
-# - show
-# - hide
 
 class ChatBotViewTkinter(object):
     def __init__(self, model):
@@ -29,11 +26,38 @@ class ChatBotViewTkinter(object):
         self.root.mainloop()
         pass
 
-    def _syncWithModel(self, user, msg):
+    def clearDialog(self):
         self.text.config(state=NORMAL)
 
-        line = u"{}: {}\n".format(user, msg)
+        self.text.delete(1.0, END)
+
+        self.text.config(state=DISABLED)
+        pass
+
+    def _syncWithModel(self, user, msg):
+        message_counter = self.model.getMessageCount()
+
+        self.text.config(state=NORMAL)
+
+        line = u"[{}] {}: {}\n".format(message_counter, user, msg)
+
         self.text.insert(END, line)
+
+        tag_name = "tag_{}".format(message_counter)
+
+        self.text.tag_add(
+            tag_name
+            , "{}.0".format(message_counter)
+            , "{}.{}".format(message_counter, len(line))
+        )
+
+        background = "#c3aed6" if user == self.model.user_name else "#ffd5cd"
+
+        self.text.tag_config(
+            tag_name
+            , background=background
+            , foreground="#000000"
+        )
 
         self.text.config(state=DISABLED)
 
@@ -57,8 +81,6 @@ class ChatBotViewTkinter(object):
             return
             pass
 
-        # self.controller.submit(value)
-
         Notification.notify(Events.onViewSubmit, value);
 
         self.entry_str_var.set("")
@@ -72,8 +94,6 @@ class ChatBotViewTkinter(object):
         btn_start = Button(self.root, text=u"Найти собеседника")
 
         def onBtnStartClick(event):
-            # self.controller.startChatting()
-
             Notification.notify(Events.onViewStartChatting);
             
             self.ent.config(state=NORMAL)
@@ -110,6 +130,5 @@ class ChatBotViewTkinter(object):
         scrollbar.config(command=self.text.yview)        
 
         frame.pack(fill=BOTH, expand=True)
-        
         pass
     pass
