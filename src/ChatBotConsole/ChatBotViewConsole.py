@@ -29,7 +29,7 @@ class ChatBotViewConsole(object):
         user_input = ""
         while len(user_input) == 0:
             try:
-                user_input = input("[{}] > ".format(message_counter+1))
+                user_input = input("[{}] {}: ".format(message_counter+1, self.model.user_name))
             except Exception as exception:
                 Trace.log("View", "inputUserMessage {}: {}".format(type(exception), exception))
                 pass
