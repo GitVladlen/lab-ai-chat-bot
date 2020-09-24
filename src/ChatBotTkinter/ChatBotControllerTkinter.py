@@ -19,37 +19,14 @@ class ChatBotControllerTkinter(object):
 
     def _submit(self, msg):
         self.model.addToHistory(self.model.user_name, msg)
-
-        suggestion = self.model.doSuggestion(msg)
-        if suggestion is not None:
-            self.model.addToHistory(self.model.bot_name, suggestion)
-            pass
-
-        post_question = self.model.doPostQuestion()
-        if post_question is not None:
-            self.model.addToHistory(self.model.bot_name, post_question)
-            pass
-
-        self.model.nextQuestion()
-
-        question = self.model.doQuestion()
-        if question is None:
-            return
-            pass
-
-        self.model.addToHistory(self.model.bot_name, question)
+        answer = self.model.analyze(msg)
+        self.model.addToHistory(self.model.bot_name, answer)
         pass
 
     def _startChatting(self):
         self.model.reset()
         self.view.clearDialog()
 
-        question = self.model.doQuestion()
-        if question is None:
-            return
-            pass
-
-        self.model.addToHistory(self.model.bot_name, question)
+        self.model.addToHistory(self.model.bot_name, "Hello. How are you feeling today?")
         pass
-
     pass
