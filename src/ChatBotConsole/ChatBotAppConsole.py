@@ -12,7 +12,7 @@ class ChatBotAppConsole(object):
     def __init__(self):
         Events.addEvent("onModelHistoryChanged");
 
-        self.model = ChatBotModel("dialogs.json")
+        self.model = ChatBotModel("dialogs_ru.json")
         self.view = ChatBotViewConsole(self.model)
 
         self.controller = ChatBotControllerConsole(self.model, self.view)

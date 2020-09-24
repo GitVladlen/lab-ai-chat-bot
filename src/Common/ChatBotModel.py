@@ -15,8 +15,8 @@ class ChatBotModel(object):
 
         self.history = []
 
-        self.user_name = u"You"
-        self.bot_name = u"Bot"
+        self.user_name = u"Вы"
+        self.bot_name = u"Собеседник"
 
         self.loadData(data_file_name)
         pass
@@ -37,6 +37,8 @@ class ChatBotModel(object):
         pass
 
     def reflect(self, fragment):
+        if not fragment:
+            return ''
         tokens = fragment.lower().split()
         for i, token in enumerate(tokens):
             if token in self.reflections:

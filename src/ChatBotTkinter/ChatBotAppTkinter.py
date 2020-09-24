@@ -14,7 +14,7 @@ class ChatBotAppTkinter(object):
         Events.addEvent("onViewStartChatting")
         Events.addEvent("onModelHistoryChanged")
 
-        self.model = ChatBotModel("dialogs.json")
+        self.model = ChatBotModel("dialogs_ru.json")
         self.view = ChatBotViewTkinter(self.model)
 
         self.controller = ChatBotControllerTkinter(self.model, self.view)

@@ -27,6 +27,6 @@ class ChatBotControllerTkinter(object):
         self.model.reset()
         self.view.clearDialog()
 
-        self.model.addToHistory(self.model.bot_name, "Hello. How are you feeling today?")
+        self.model.addToHistory(self.model.bot_name, "Давайте общаться!")
         pass
     pass

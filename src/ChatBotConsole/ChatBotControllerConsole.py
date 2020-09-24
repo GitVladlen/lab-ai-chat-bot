@@ -16,7 +16,7 @@ class ChatBotControllerConsole(object):
     def _startChatting(self):
         self.model.reset()
 
-        self.model.addToHistory(self.model.bot_name, "Hello. How are you feeling today?")
+        self.model.addToHistory(self.model.bot_name, "Давайте общаться!")
 
         while True:
             user_input = self.view.inputUserMessage()
